@@ -12,6 +12,12 @@ server.use(helmet());
 // server.use(morgan('dev'));
 server.use(logger);
 
+// sanity check
+
+server.get("/", (req, res) => {
+  res.json({ message: "sanity check", envMessage: process.env.MESSAGE });
+});
+
 // Routing
 server.use("/api/users", userRouter);
 server.use("/api/posts", postRouter);
@@ -22,9 +28,9 @@ server.get("/", (req, res) => {
 
 server.use((req, res) => {
   res.status(404).json({
-      message: "Route not found"
-  })
-})
+    message: "Route not found"
+  });
+});
 
 server.use((err, req, res, next) => {
   console.log(err);
